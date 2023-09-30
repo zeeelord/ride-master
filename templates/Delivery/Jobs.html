@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Posts {% endblock %}
+
+{% block content %}
+
+    <!-- ***** Blog Area Start ***** -->
+    <section class="blog-area load-more">
+        <div class="container">
+            <div class="row items">
+                {% for datum in page %}
+
+                    <div class="col-12 col-md-4 item">
+                        <!-- Single Blog -->
+                        <div class="card blog-card">
+
+                            <div class="blog-content">
+                                <!-- Meta Info -->
+                                <ul class="meta-info d-flex justify-content-between list-unstyled mt-4">
+                                    <li>By: <a class="p-2">{{ datum.by }}</a></li>
+                                    {#                                    <li><a href="#">Feb 19, 2021</a></li>#}
+                                </ul>
+                                <!-- Blog Title -->
+                                <a href="{% url 'Delivery:single' datum.id %}">
+                                    <h4>{{ datum.title }}</h4>
+                                </a>
+                                <p>{{ datum.type }}</p>
+                                <!-- Blog Button -->
+                                <a class="btn content-btn" href="{{ datum.url }}" target="_blank">Go to</a>
+                                {#                                <p>{{ datum.id }}</p>#}
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <nav aria-label="..." class="col-12 text-center">
+                <ul class="pagination pagination-sm">
+                    {% if page.has_previous %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5" href="?page={{ page.previous_page_number }}">Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5 disabled">Previous</a></li>
+                    {% endif %}
+
+                    {% if page.has_previous %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5" href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item active" aria-current="page">
+                      <span class="btn btn-bordered-white mt-5">
+                        {{ page.number }}
+                        <span class="sr-only active">(current)</span>
+                      </span>
+
+                    {% if page.has_next %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5" href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if page.has_next %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5" href="?page={{ page.next_page_number }}">Next</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item"><a class="btn btn-bordered-white mt-5 disabled">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {#                <div class="row">#}
+            {#                    <div class="col-12 text-center">#}
+            {#                        <a id="load-btn" class="btn btn-bordered-white mt-5" href="#">Load More</a>#}
+            {#                    </div>#}
+            {#                </div>#}
+        </div>
+    </section>
+    <!-- ***** Blog Area End ***** -->
+
+{% endblock %}
